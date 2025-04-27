@@ -1,0 +1,75 @@
+* {
+	box-sizing: border-box;
+	font-family: "Wallpoet", sans-serif;
+	font-size: 30px;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	color: red;
+}
+
+.container {
+	border: 1px solid black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.calculator {
+	border: 1px solid purple;
+	width: 500px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 30px;
+}
+
+.display {
+	border: 1px solid blue;
+	width: 100%;
+	text-align: end;
+}
+
+.keypad {
+	display: flex;
+	border: 1px solid green;
+	width: 100%;
+}
+
+.numbers {
+	display: flex;
+	flex-wrap: wrap;
+	width: 330px;
+	gap: 10px;
+
+	> div {
+		border: 1px solid red;
+		width: 100px;
+		height: 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+.operators {
+	border: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	> div {
+		border: 1px solid red;
+		width: 100px;
+		height: 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
