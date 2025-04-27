@@ -1,6 +1,6 @@
 const initialState = {
-	isKeypadDirty: false,
 	isOperationComplete: false,
+	numberOfOperands: 0,
 };
 
 const state = { ...initialState };

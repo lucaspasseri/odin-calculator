@@ -16,7 +16,7 @@ function division(a, b) {
 	return Number(a) / Number(b);
 }
 
-function operate(operation, a, b) {
+function chooseOperation(operation, a, b) {
 	switch (operation) {
 		case "+":
 			return add(a, b);
@@ -36,67 +36,105 @@ console.log(keypad);
 
 const display = document.querySelector(".display");
 
+function getOperands() {
+	const display = document.querySelector(".display");
+	const displayText = display.textContent;
+	const operands = displayText.split(" ").filter(part => part !== "");
+	return operands;
+}
+
 keypad.addEventListener("click", e => {
 	const keyPressed = e.target.id;
-	console.log(keyPressed);
+	console.table(keyPressed, state.numberOfOperands);
+	if (!keyPressed) return;
 
-	if (!state.isKeypadDirty) {
-		display.textContent = "";
-		state.isKeypadDirty = true;
+	const equalityPressed = keyPressed === "=";
+
+	const operatorPressed =
+		keyPressed === "+" ||
+		keyPressed === "-" ||
+		keyPressed === "x" ||
+		keyPressed === "/";
+
+	const numberPressed =
+		keyPressed === "0" ||
+		keyPressed === "1" ||
+		keyPressed === "2" ||
+		keyPressed === "3" ||
+		keyPressed === "4" ||
+		keyPressed === "5" ||
+		keyPressed === "6" ||
+		keyPressed === "7" ||
+		keyPressed === "8" ||
+		keyPressed === "9";
+
+	if (
+		(state.numberOfOperands === 0 || state.numberOfOperands === 2) &&
+		(operatorPressed || equalityPressed)
+	) {
+		return;
 	}
 
-	switch (keyPressed) {
-		case "0":
-		case "1":
-		case "2":
-		case "3":
-		case "4":
-		case "5":
-		case "6":
-		case "7":
-		case "8":
-		case "9":
-			if (state.isOperationComplete) {
-				display.textContent = "";
-				state.isOperationComplete = false;
-			}
-			display.textContent = `${display.textContent}${keyPressed}`;
-			break;
-		case "+":
-		case "-":
-		case "x":
-		case "/":
-			if (state.isOperationComplete) {
-				state.isOperationComplete = false;
-			}
-			display.textContent = `${display.textContent} ${keyPressed} `;
-			break;
-		case "=":
-			const currentText = display.textContent;
+	if (state.numberOfOperands === 0) {
+		display.textContent = "";
 
-			console.log(currentText);
+		display.textContent = `${display.textContent}${keyPressed}`;
+		state.numberOfOperands += 1;
+		return;
+	}
 
-			const operationParts = currentText.split(" ").filter(part => part !== "");
+	if (operatorPressed) {
+		if (state.numberOfOperands === 3) {
+			const operands = getOperands();
+			if (operands.length < 3) throw Error;
 
-			console.log(currentText, operationParts);
+			const a = operands[0];
+			const operation = operands[1];
+			const b = operands[2];
 
-			if (operationParts < 3) return;
+			const result = chooseOperation(operation, a, b);
 
-			const a = operationParts[0];
-			const operation = operationParts[1];
-			const b = operationParts[2];
+			display.textContent = `${result} ${keyPressed} `;
+			state.numberOfOperands = 2;
+			return;
+		}
 
-			console.log(a, operation, b);
+		display.textContent = `${display.textContent} ${keyPressed} `;
+		state.numberOfOperands += 1;
+		state.isOperationComplete = false;
+		return;
+	}
 
-			const result = operate(operation, a, b);
+	if (numberPressed) {
+		if (state.isOperationComplete) {
+			state.isOperationComplete = false;
+			display.textContent = `${keyPressed}`;
+			return;
+		}
 
-			console.log(result);
+		if (state.numberOfOperands === 2) {
+			display.textContent = `${display.textContent} ${keyPressed}`;
+			state.numberOfOperands += 1;
+			return;
+		}
 
-			display.textContent = `${result}`;
-			state.isOperationComplete = true;
+		display.textContent = `${display.textContent}${keyPressed}`;
+		return;
+	}
 
-			break;
-		default:
-			console.log("What key is that?");
+	if (equalityPressed) {
+		const operands = getOperands();
+		if (operands.length < 3) return;
+
+		const a = operands[0];
+		const operation = operands[1];
+		const b = operands[2];
+
+		const result = chooseOperation(operation, a, b);
+
+		display.textContent = `${result}`;
+		state.numberOfOperands = 1;
+		state.isOperationComplete = true;
+		return;
 	}
 });
