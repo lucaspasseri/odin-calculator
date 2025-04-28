@@ -1,5 +1,6 @@
 import { allClear } from "./operation/allClear.js";
 import { clearEntry } from "./operation/clearEntry.js";
+import { dot } from "./operation/dot.js";
 import { getOperandsFromDisplay } from "./util/getOperandsFromDisplay.js";
 import { state } from "./state.js";
 
@@ -16,7 +17,8 @@ function multiplication(a, b) {
 }
 
 function division(a, b) {
-	return Number(a) / Number(b);
+	const num = Number(a) / Number(b);
+	return Math.round((num + Number.EPSILON) * 1000) / 1000;
 }
 
 function chooseOperation(operation, a, b) {
@@ -35,7 +37,6 @@ function chooseOperation(operation, a, b) {
 }
 
 const keypad = document.querySelector(".keypad");
-console.log(keypad);
 
 const display = document.querySelector(".display");
 
@@ -50,6 +51,12 @@ keypad.addEventListener("click", e => {
 
 	if (keyPressed === "clearEntry") {
 		clearEntry();
+		return;
+	}
+
+	if (keyPressed === "dot") {
+		// overflow still happening
+		dot();
 		return;
 	}
 
@@ -122,7 +129,6 @@ keypad.addEventListener("click", e => {
 			state.numberOfOperands = 3;
 			return;
 		}
-		console.log("oi");
 		display.textContent = `${display.textContent}${keyPressed}`;
 		return;
 	}

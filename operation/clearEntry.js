@@ -1,5 +1,6 @@
 import { state } from "../state.js";
 import { getOperandsFromDisplay } from "../util/getOperandsFromDisplay.js";
+import { allClear } from "./allClear.js";
 
 function clearEntry() {
 	const display = document.querySelector(".display");
