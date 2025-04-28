@@ -3,38 +3,7 @@ import { clearEntry } from "./operation/clearEntry.js";
 import { dot } from "./operation/dot.js";
 import { getOperandsFromDisplay } from "./util/getOperandsFromDisplay.js";
 import { state } from "./state.js";
-
-function add(a, b) {
-	return Number(a) + Number(b);
-}
-
-function subtraction(a, b) {
-	return Number(a) - Number(b);
-}
-
-function multiplication(a, b) {
-	return Number(a) * Number(b);
-}
-
-function division(a, b) {
-	const num = Number(a) / Number(b);
-	return Math.round((num + Number.EPSILON) * 1000) / 1000;
-}
-
-function chooseOperation(operation, a, b) {
-	switch (operation) {
-		case "+":
-			return add(a, b);
-		case "-":
-			return subtraction(a, b);
-		case "x":
-			return multiplication(a, b);
-		case "/":
-			return division(a, b);
-		default:
-			return "Error!";
-	}
-}
+import { chooseOperation } from "./operation/basicOperations.js";
 
 const keypad = document.querySelector(".keypad");
 
@@ -86,7 +55,6 @@ keypad.addEventListener("click", e => {
 	}
 
 	if (keyPressed === "dot") {
-		// overflow still happening
 		dot();
 		return;
 	}
