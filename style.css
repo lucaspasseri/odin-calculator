@@ -27,31 +27,31 @@ h1 {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	padding: 30px;
+	padding: 35px;
 }
 
 .display {
 	border: 1px solid blue;
 	width: 100%;
 	text-align: end;
+	margin-bottom: 20px;
 }
 
 .keypad {
 	display: flex;
-	border: 1px solid green;
+	/* border: 1px solid green; */
 	width: 100%;
 }
 
 .numbers {
 	display: flex;
 	flex-wrap: wrap;
-	width: 330px;
 	gap: 10px;
 
 	> div {
 		border: 1px solid red;
-		width: 100px;
-		height: 100px;
+		width: 60px;
+		height: 60px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -59,17 +59,21 @@ h1 {
 }
 
 .operators {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 
 	> div {
 		border: 1px solid red;
-		width: 100px;
-		height: 100px;
+		width: 60px;
+		height: 50px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
+}
+
+#equal {
+	width: 130px;
 }

@@ -1,3 +1,6 @@
+import { allClear } from "./operation/allClear.js";
+import { clearEntry } from "./operation/clearEntry.js";
+import { getOperandsFromDisplay } from "./util/getOperandsFromDisplay.js";
 import { state } from "./state.js";
 
 function add(a, b) {
@@ -36,19 +39,21 @@ console.log(keypad);
 
 const display = document.querySelector(".display");
 
-function getOperands() {
-	const display = document.querySelector(".display");
-	const displayText = display.textContent;
-	const operands = displayText.split(" ").filter(part => part !== "");
-	return operands;
-}
-
 keypad.addEventListener("click", e => {
 	const keyPressed = e.target.id;
-	console.table(keyPressed, state.numberOfOperands);
 	if (!keyPressed) return;
 
-	const equalityPressed = keyPressed === "=";
+	if (keyPressed === "allClear") {
+		allClear();
+		return;
+	}
+
+	if (keyPressed === "clearEntry") {
+		clearEntry();
+		return;
+	}
+
+	const equalityPressed = keyPressed === "equal";
 
 	const operatorPressed =
 		keyPressed === "+" ||
@@ -85,7 +90,7 @@ keypad.addEventListener("click", e => {
 
 	if (operatorPressed) {
 		if (state.numberOfOperands === 3) {
-			const operands = getOperands();
+			const operands = getOperandsFromDisplay();
 			if (operands.length < 3) throw Error;
 
 			const a = operands[0];
@@ -114,16 +119,16 @@ keypad.addEventListener("click", e => {
 
 		if (state.numberOfOperands === 2) {
 			display.textContent = `${display.textContent} ${keyPressed}`;
-			state.numberOfOperands += 1;
+			state.numberOfOperands = 3;
 			return;
 		}
-
+		console.log("oi");
 		display.textContent = `${display.textContent}${keyPressed}`;
 		return;
 	}
 
 	if (equalityPressed) {
-		const operands = getOperands();
+		const operands = getOperandsFromDisplay();
 		if (operands.length < 3) return;
 
 		const a = operands[0];
