@@ -44,22 +44,6 @@ keypad.addEventListener("click", e => {
 	const keyPressed = e.target.id;
 	if (!keyPressed) return;
 
-	if (keyPressed === "allClear") {
-		allClear();
-		return;
-	}
-
-	if (keyPressed === "clearEntry") {
-		clearEntry();
-		return;
-	}
-
-	if (keyPressed === "dot") {
-		// overflow still happening
-		dot();
-		return;
-	}
-
 	const equalityPressed = keyPressed === "equal";
 
 	const operatorPressed =
@@ -80,22 +64,42 @@ keypad.addEventListener("click", e => {
 		keyPressed === "8" ||
 		keyPressed === "9";
 
-	if (
-		(state.numberOfOperands === 0 || state.numberOfOperands === 2) &&
-		(operatorPressed || equalityPressed)
-	) {
+	if (state.numberOfOperands === -1) {
+		if (numberPressed) {
+			state.numberOfOperands = 1;
+			display.textContent = keyPressed;
+			return;
+		}
+
+		allClear();
 		return;
 	}
 
-	if (state.numberOfOperands === 0) {
-		display.textContent = "";
+	if (keyPressed === "allClear") {
+		allClear();
+		return;
+	}
 
-		display.textContent = `${display.textContent}${keyPressed}`;
-		state.numberOfOperands += 1;
+	if (keyPressed === "clearEntry") {
+		clearEntry();
+		return;
+	}
+
+	if (keyPressed === "dot") {
+		// overflow still happening
+		dot();
 		return;
 	}
 
 	if (operatorPressed) {
+		if (state.numberOfOperands === 0) return;
+
+		if (state.numberOfOperands === 2) {
+			if (display.textContent.at(-2) === keyPressed) return;
+			display.textContent = `${display.textContent.slice(0, -2)}${keyPressed} `;
+			return;
+		}
+
 		if (state.numberOfOperands === 3) {
 			const operands = getOperandsFromDisplay();
 			if (operands.length < 3) throw Error;
@@ -103,6 +107,12 @@ keypad.addEventListener("click", e => {
 			const a = operands[0];
 			const operation = operands[1];
 			const b = operands[2];
+
+			if (operation === "/" && Number(b) === 0) {
+				state.numberOfOperands = -1;
+				display.textContent = "Sry, not today!";
+				return;
+			}
 
 			const result = chooseOperation(operation, a, b);
 
@@ -124,6 +134,12 @@ keypad.addEventListener("click", e => {
 			return;
 		}
 
+		if (state.numberOfOperands === 0) {
+			display.textContent = `${keyPressed}`;
+			state.numberOfOperands += 1;
+			return;
+		}
+
 		if (state.numberOfOperands === 2) {
 			display.textContent = `${display.textContent} ${keyPressed}`;
 			state.numberOfOperands = 3;
@@ -140,6 +156,12 @@ keypad.addEventListener("click", e => {
 		const a = operands[0];
 		const operation = operands[1];
 		const b = operands[2];
+
+		if (operation === "/" && Number(b) === 0) {
+			state.numberOfOperands = -1;
+			display.textContent = "Sry, not today!";
+			return;
+		}
 
 		const result = chooseOperation(operation, a, b);
 
