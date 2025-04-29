@@ -1,45 +1,56 @@
 * {
 	box-sizing: border-box;
-	font-family: "Wallpoet", sans-serif;
 	font-size: 30px;
 }
 
 body {
 	margin: 0;
 	padding: 0;
+	background-color: #7345d6;
 }
 
 h1 {
-	color: red;
+	color: #2e2e2e;
+	font-size: 40px;
+}
+
+.header-container {
+	> div {
+		width: 530px;
+		margin: 0 auto;
+	}
 }
 
 .container {
-	border: 1px solid black;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-top: 60px;
 }
 
 .calculator {
-	border: 1px solid purple;
-	width: 500px;
+	background-color: #2e2e2e;
+	width: 530px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	padding: 35px;
+	flex-shrink: 0;
 }
 
 .display {
-	border: 1px solid blue;
+	/* border: 1px solid black; */
 	width: 100%;
 	text-align: end;
 	margin-bottom: 20px;
+	font-family: "Wallpoet", sans-serif;
+	font-size: 36px;
+	background-color: #ffffff;
 }
 
 .keypad {
 	display: flex;
-	/* border: 1px solid green; */
 	width: 100%;
 }
 
@@ -48,32 +59,31 @@ h1 {
 	flex-wrap: wrap;
 	gap: 10px;
 
+	> button,
 	> div {
-		border: 1px solid red;
-		width: 60px;
+		width: 80px;
 		height: 60px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
+
+	button {
+		background-color: #bfab93;
+	}
 }
 
 .operators {
-	/* border: 1px solid black; */
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 
-	> div {
-		border: 1px solid red;
-		width: 60px;
-		height: 50px;
+	> button {
+		width: 80px;
+		height: 60px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		background-color: #bfab93;
 	}
-}
-
-#equal {
-	width: 130px;
 }
