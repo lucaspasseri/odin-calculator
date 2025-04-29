@@ -2,9 +2,9 @@
 
 I am improving my skills as a web developer, learning Javascript with [TOP](https://www.theodinproject.com/lessons/foundations-calculator)
 
-<!-- ## Deploy
+## Deploy
 
-You can [play the game](https://lucaspasseri.github.io/odin-rock-paper-scissors/) on Github pages. -->
+You can [use the calculator](https://lucaspasseri.github.io/odin-calculator/) on Github pages.
 
 ## Me
 
