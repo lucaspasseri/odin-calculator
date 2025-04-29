@@ -103,6 +103,7 @@ keypad.addEventListener("click", e => {
 		}
 
 		if (state.numberOfOperands === 0) {
+			if (keyPressed === "0") return;
 			display.textContent = `${keyPressed}`;
 			state.numberOfOperands += 1;
 			return;
@@ -113,6 +114,20 @@ keypad.addEventListener("click", e => {
 			state.numberOfOperands = 3;
 			return;
 		}
+
+		if (keyPressed === "0") {
+			const lastOperand = getOperandsFromDisplay().at(-1);
+			const hasLeadingZeros = Array.from(lastOperand).every(
+				digit => digit === "0"
+			);
+			if (hasLeadingZeros) return;
+		}
+
+		if (display.textContent === "0") {
+			display.textContent = `${keyPressed}`;
+			return;
+		}
+
 		display.textContent = `${display.textContent}${keyPressed}`;
 		return;
 	}

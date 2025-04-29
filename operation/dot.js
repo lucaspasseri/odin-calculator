@@ -3,6 +3,13 @@ import { getOperandsFromDisplay } from "../util/getOperandsFromDisplay.js";
 
 function dot() {
 	const display = document.querySelector(".display");
+
+	if (state.isOperationComplete) {
+		state.isOperationComplete = false;
+		display.textContent = `${"0."}`;
+		return;
+	}
+
 	if (state.numberOfOperands === 0) {
 		display.textContent = "0.";
 		state.numberOfOperands += 1;
